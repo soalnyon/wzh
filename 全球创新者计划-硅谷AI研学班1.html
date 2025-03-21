@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>全球创新者计划 - 硅谷人工智能研学班</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --deep-purple: #452475;
+      --light-purple: #8e72bc;
+      --brand-yellow: #ffb927;
+      --glass-bg: rgba(255, 255, 255, 0.1);
+    }
+    
+    body {
+      font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #f3e9ff 0%, #e9d6ff 100%);
+      color: #333;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    .blur-bg {
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background-color: var(--glass-bg);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .brand-text {
+      color: var(--deep-purple);
+    }
+    
+    .brand-text-yellow {
+      color: var(--brand-yellow);
+    }
+    
+    .brand-gradient {
+      background: linear-gradient(135deg, var(--deep-purple), var(--brand-yellow));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--deep-purple), #6a3cb5);
+      color: white;
+      box-shadow: 0 4px 15px rgba(69, 36, 117, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(69, 36, 117, 0.4);
+    }
+    
+    .rotating-earth {
+      animation: rotate 60s linear infinite;
+      position: fixed;
+      opacity: 0.1;
+      z-index: -1;
+      top: 50%;
+      left: 50%;
+      transform-origin: center;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 300px;
+    }
+    
+    @keyframes rotate {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    .carousel {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .carousel-inner {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    
+    .carousel-item {
+      min-width: 100%;
+      height: 100%;
+    }
+    
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 15px;
+    }
+    
+    .carousel-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      backdrop-filter: blur(5px);
+      background-color: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    
+    .carousel-indicators {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+    }
+    
+    .indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+    }
+    
+    .indicator.active {
+      background: white;
+    }
+    
+    .section-title {
+      position: relative;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+    
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--deep-purple);
+      border-radius: 3px;
+    }
+    
+    .program-card {
+      border-radius: 16px;
+      background: white;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .program-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f0e6ff, #e0cdff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      box-shadow: 0 4px 10px rgba(69, 36, 117, 0.15);
+    }
+    
+    .feature-icon .material-icons {
+      color: var(--deep-purple);
+      font-size: 28px;
+    }
+    
+    .map-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    
+    .map-point {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: var(--deep-purple);
+      border: 3px solid white;
+      border-radius: 50%;
+      box-shadow: 0 0 0 rgba(69, 36, 117, 0.4);
+      animation: pulse 2s infinite;
+      cursor: pointer;
+      z-index: 5;
+    }
+    
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(69, 36, 117, 0.4);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(69, 36, 117, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(69, 36, 117, 0);
+      }
+    }
+    
+    .location-tooltip {
+      position: fixed;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(5px);
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      width: 250px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    .location-tooltip.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .location-tooltip-header {
+      border-bottom: 1px solid #eee;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+    }
+    
+    .teacher-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+    
+    .teacher-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    
+    .teacher-avatar:hover {
+      transform: scale(1.05);
+    }
+    
+    .teacher-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .teacher-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      width: 85%;
+      max-width: 400px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .modal-header {
+      padding: 20px 25px;
+      background: linear-gradient(135deg, var(--deep-purple), #7941c9);
+      border-radius: 16px 16px 0 0;
+      color: white;
+      position: relative;
+    }
+    
+    .modal-body {
+      padding: 20px 25px;
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      cursor: pointer;
+      color: white;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -80%;
+      width: 80%;
+      height: 100%;
+      background: white;
+      z-index: 100;
+      transition: left 0.3s ease;
+      box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      left: 0;
+    }
+    
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .sidebar-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .consult-btn {
+      position: fixed;
+      left: 20px;
+      bottom: 30px;
+      z-index: 50;
+      animation: float 2s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .highlight {
+      font-weight: 600;
+      color: var(--deep-purple);
+    }
+    
+    .course-item {
+      position: relative;
+      padding-left: 25px;
+    }
+    
+    .course-item::before {
+      content: "•";
+      position: absolute;
+      left: 10px;
+      color: var(--brand-yellow);
+      font-size: 1.2rem;
+    }
+    
+    .number-highlight {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--deep-purple), #8249c9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+    
+    .arrangement-card {
+      border-radius: 16px;
+      background: white;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .arrangement-header {
+      background: linear-gradient(135deg, var(--deep-purple), #7b47c0);
+      color: white;
+      padding: 10px 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+    
+    .arrangement-content {
+      padding: 12px;
+    }
+    
+    /* 改进的液体水滴效果 */
+    .liquid-btn {
+      position: relative;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(69, 36, 117, 0.3);
+    }
+    
+    .liquid-btn::before,
+    .liquid-btn::after {
+      content: "";
+      position: absolute;
+      width: 150%;
+      height: 70%;
+      background: var(--deep-purple);
+      bottom: -10%;
+      left: -25%;
+      border-radius: 100%;
+    }
+    
+    .liquid-btn::before {
+      animation: wave 4s infinite linear;
+      opacity: 0.7;
+    }
+    
+    .liquid-btn::after {
+      animation: wave 5s infinite linear;
+      opacity: 0.5;
+      top: 55%;
+    }
+    
+    @keyframes wave {
+      0% {
+        transform: translateX(0) rotate(0);
+      }
+      50% {
+        transform: translateX(-25%) rotate(10deg);
+      }
+      100% {
+        transform: translateX(0) rotate(0);
+      }
+    }
+    
+    .arrangement-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: var(--light-purple);
+      color: white;
+    }
+    
+    .teacher-info-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .teacher-info-list li {
+      position: relative;
+      padding-left: 15px;
+      margin-bottom: 6px;
+      font-size: 0.75rem;
+      line-height: 1.3;
+    }
+    
+    .teacher-info-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--deep-purple);
+      font-weight: bold;
+    }
+
+    .teacher-title {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.7rem;
+      margin-top: 2px;
+    }
+    
+    .feature-box {
+      border-radius: 12px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 15px rgba(69, 36, 117, 0.08);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(69, 36, 117, 0.12);
+    }
+
+    /* 使旋转地球更加明显 */
+    .earth-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .footer-icon {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+    
+    .footer-icon .material-icons {
+      font-size: 14px;
+    }
+    
+    .footer-text {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.8);
+      letter-spacing: 0.3px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 旋转地球背景 -->
+  <div class="earth-container">
+    <img src="https://airs.cuhk.edu.cn/themes/custom/cuhk_ui/templates/ui/images/AIRS/carousel-14-0--1.png" 
+         class="rotating-earth" 
+         alt="Earth Background">
+  </div>
+
+  <!-- 侧边栏导航 -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="sidebar" id="sidebar">
+    <div class="p-4 flex items-center justify-between border-b">
+      <img src="https://s2.loli.net/2025/03/20/1YOZSm2CuKM4dgB.png" alt="AIRS Logo" class="h-8">
+      <span class="material-icons cursor-pointer" id="closeSidebar">close</span>
+    </div>
+    <div class="p-4">
+      <nav class="flex flex-col space-y-4">
+        <a href="#overview" class="py-2 px-4 hover:bg-gray-100 rounded-lg">课程概览</a>
+        <a href="#curriculum" class="py-2 px-4 hover:bg-gray-100 rounded-lg">课程设置</a>
+        <a href="#faculty" class="py-2 px-4 hover:bg-gray-100 rounded-lg">师资力量</a>
+        <a href="#prospects" class="py-2 px-4 hover:bg-gray-100 rounded-lg">招募对象</a>
+        <a href="#arrangement" class="py-2 px-4 hover:bg-gray-100 rounded-lg">课程安排</a>
+        <a href="https://airs-academy.mike-x.com/Oj2g4" target="_blank" class="py-2 px-4 bg-purple-100 text-purple-700 rounded-lg">课程咨询</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 顶部导航栏 -->
+  <header class="fixed top-0 left-0 w-full blur-bg z-50">
+    <div class="container mx-auto px-4 py-2 flex items-center justify-between">
+      <img src="https://s2.loli.net/2025/03/20/1YOZSm2CuKM4dgB.png" alt="AIRS Logo" class="h-10">
+      <div class="cursor-pointer" id="openSidebar">
+        <span class="material-icons text-purple-900">menu</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 轮播图 -->
+  <div class="carousel h-64 mt-14 mb-8">
+    <div class="carousel-inner h-full" id="carouselInner">
+      <div class="carousel-item h-full">
+        <img src="https://www.cuhk.edu.cn/sites/webmaster.prod1.dpsite04.cuhk.edu.cn/files/styles/crop_freeform/public/2024-03/Weixin%20Image_20240320174144.jpg" 
+             alt="大学图片" 
+             class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex flex-col justify-end p-6">
+          <h1 class="text-2xl font-bold text-white">全球创新者计划</h1>
+          <p class="text-sm text-white/90">硅谷人工智能研学班</p>
+          <p class="text-xs text-white/80 mt-1">Global Innovator Program</p>
+        </div>
+      </div>
+      <div class="carousel-item h-full">
+        <img src="https://www.cuhk.edu.cn/sites/webmaster.prod1.dpsite04.cuhk.edu.cn/files/styles/crop_freeform/public/2020-03/CUHK-Shenzhen10.jpg" 
+             alt="大学图片" 
+             class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex flex-col justify-end p-6">
+          <h1 class="text-2xl font-bold text-white">全球创新者计划</h1>
+          <p class="text-sm text-white/90">硅谷人工智能研学班</p>
+          <p class="text-xs text-white/80 mt-1">Global Innovator Program</p>
+        </div>
+      </div>
+      <div class="carousel-item h-full">
+        <img src="https://www.cuhk.edu.cn/sites/webmaster.prod1.dpsite04.cuhk.edu.cn/files/styles/crop_freeform/public/2021-01/0H2A9639_1_0.jpg" 
+             alt="大学图片" 
+             class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex flex-col justify-end p-6">
+          <h1 class="text-2xl font-bold text-white">全球创新者计划</h1>
+          <p class="text-sm text-white/90">硅谷人工智能研学班</p>
+          <p class="text-xs text-white/80 mt-1">Global Innovator Program</p>
+        </div>
+      </div>
+      <div class="carousel-item h-full">
+        <img src="https://s2.loli.net/2025/03/14/FLblUdnSkfxpTOC.png" 
+             alt="本地图片" 
+             class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex flex-col justify-end p-6">
+          <h1 class="text-2xl font-bold text-white">全球创新者计划</h1>
+          <p class="text-sm text-white/90">硅谷人工智能研学班</p>
+          <p class="text-xs text-white/80 mt-1">Global Innovator Program</p>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-nav">
+      <div class="carousel-btn prev">
+        <span class="material-icons text-white">chevron_left</span>
+      </div>
+      <div class="carousel-btn next">
+        <span class="material-icons text-white">chevron_right</span>
+      </div>
+    </div>
+    <div class="carousel-indicators" id="carouselIndicators"></div>
+  </div>
+
+  <div class="container mx-auto px-4">
+    <!-- 课程概览 -->
+    <section id="overview" class="mb-10">
+      <h2 class="section-title text-xl brand-text">课程概览 Program Overview</h2>
+      <div class="p-5 bg-white rounded-xl shadow-sm">
+        <p class="text-sm mb-4">
+          <span class="highlight">香港中文大学（深圳）-AIRS科学战略课程全球创新者计划（硅谷人工智能研学班）</span>融合了香港中文大学（深圳）和深圳市人工智能与机器人研究院（简称AIRS）深厚的学术力量及产业界资源，以及硅谷地区世界名校深厚的学习资源和产业资源。通过国内AI科学课堂与海外沉浸式游学的结合，为学员打造全方位融合人工智能科技知识、产业规划以及科学战略能力的卓越课程。
+        </p>
+        <p class="text-sm mb-4">
+          该课程将深入探讨当下前沿AI技术、多元产业应用场景、战略管理，以及企业战略规划、管理思维等内容。旨在培育管理人士的科学战略规划与创新思维能力，助力企业高管学员全面提升科学素养，拓展认知边界，并拓宽全球创新视野。
+        </p>
+        
+        <div class="grid grid-cols-3 gap-4 mt-6">
+          <div class="feature-box">
+            <div class="feature-icon">
+              <span class="material-icons">school</span>
+            </div>
+            <p class="text-xs mt-1">CUHKSZ+AIRS+硅谷名校、名企AI科学战略课堂</p>
+          </div>
+          <div class="feature-box">
+            <div class="feature-icon">
+              <span class="material-icons">person</span>
+            </div>
+            <p class="text-xs mt-1">实战型科学家教授面授交流</p>
+          </div>
+          <div class="feature-box">
+            <div class="feature-icon">
+              <span class="material-icons">business</span>
+            </div>
+            <p class="text-xs mt-1">前沿科技企业沉浸式考察研讨</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 课程设置 -->
+    <section id="curriculum" class="mb-10">
+      <h2 class="section-title text-xl brand-text">课程设置 Curriculum</h2>
+      
+      <div class="map-container mb-6">
+        <img src="https://s2.loli.net/2025/03/17/LXUDNy4W28aqIrj.png" alt="世界地图" class="w-full rounded-xl">
+        
+        <!-- 标记深圳位置 -->
+        <div class="map-point" style="top: 45%; left: 80%;" id="shenzhenPoint"></div>
+        
+        <!-- 标记加州位置 -->
+        <div class="map-point" style="top: 40%; left: 15%;" id="californiaPoint"></div>
+        
+        <!-- 深圳信息提示框 -->
+        <div class="location-tooltip" id="shenzhenTooltip">
+          <div class="location-tooltip-header">
+            <h3 class="text-sm font-bold mb-1 text-purple-700">Shenzhen, China</h3>
+            <h4 class="text-xs font-semibold">香港中文大学(深圳)</h4>
+          </div>
+          <p class="text-xs mb-1 text-gray-700">为期3个月周末线下授课：</p>
+          <ul class="text-xs">
+            <li class="flex items-start mb-1">
+              <span class="material-icons text-purple-600 text-xs mr-1">check_circle</span>
+              <span class="text-gray-600">专题课程</span>
+            </li>
+            <li class="flex items-start mb-1">
+              <span class="material-icons text-purple-600 text-xs mr-1">check_circle</span>
+              <span class="text-gray-600">企业参访</span>
+            </li>
+            <li class="flex items-start mb-1">
+              <span class="material-icons text-purple-600 text-xs mr-1">check_circle</span>
+              <span class="text-gray-600">案例分析</span>
+            </li>
+            <li class="flex items-start">
+              <span class="material-icons text-purple-600 text-xs mr-1">check_circle</span>
+              <span class="text-gray-600">工作坊等</span>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- 加州信息提示框 -->
+        <div class="location-tooltip" id="californiaTooltip">
+          <div class="location-tooltip-header">
+            <h3 class="text-sm font-bold mb-1 text-yellow-600">California, USA</h3>
+            <h4 class="text-xs font-semibold">美国硅谷</h4>
+          </div>
+          <p class="text-xs mb-1 text-gray-700">为期1周实地学习考察：</p>
+          <ul class="text-xs">
+            <li class="flex items-start mb-1">
+              <span class="material-icons text-yellow-500 text-xs mr-1">check_circle</span>
+              <span class="text-gray-600">世界知名大学课堂学习</span>
+            </li>
+            <li class="flex items-start mb-1">
+              <span class="material-icons text-yellow-500 text-xs mr-1">check_circle</span>
+              <span class="text-gray-600">著名创新科技企业参访</span>
+            </li>
+            <li class="flex items-start mb-1">
+              <span class="material-icons text-yellow-500 text-xs mr-1">check_circle</span>
+              <span class="text-gray-600">主题沙龙</span>
+            </li>
+            <li class="flex items-start">
+              <span class="material-icons text-yellow-500 text-xs mr-1">check_circle</span>
+              <span class="text-gray-600">文化交流等</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- 国内科学模块 -->
+      <div class="program-card mb-6">
+        <div class="px-5 py-4 bg-purple-100">
+          <h3 class="text-md font-bold brand-text flex items-center">
+            <span class="material-icons mr-2">school</span>
+            国内科学模块
+          </h3>
+        </div>
+        <div class="px-5 py-3">
+          <ul class="text-sm space-y-2">
+            <li class="course-item">开营仪式/破冰团建/迎新晚宴</li>
+            <li class="course-item">人工智能与机器人综述大语言模型与语音识别</li>
+            <li class="course-item">具身智能发展与应用</li>
+            <li class="course-item">AI+ 生物特征识别</li>
+            <li class="course-item">Al+ 生物医药</li>
+            <li class="course-item">AI+ 自动驾驶</li>
+            <li class="course-item">Al+ 医疗机器人</li>
+            <li class="course-item">AI工作坊:人工智能与机器人领域的投资逻辑</li>
+            <li class="course-item">企业参访、闭门研讨会</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- 海外战略模块 -->
+      <div class="program-card">
+        <div class="px-5 py-4 bg-yellow-100">
+          <h3 class="text-md font-bold brand-text-yellow flex items-center">
+            <span class="material-icons mr-2">flight</span>
+            海外战略模块
+          </h3>
+        </div>
+        <div class="px-5 py-3">
+          <ul class="text-sm space-y-2">
+            <li class="course-item">创业设计思维</li>
+            <li class="course-item">科技创新和企业家精神</li>
+            <li class="course-item">科技战略与技术创业</li>
+            <li class="course-item">全球化战略与营销</li>
+            <li class="course-item">创业领导力</li>
+            <li class="course-item">硅谷名企考察/科技主题沙龙</li>
+            <li class="course-item">交流晚宴结营典礼/毕业晚宴</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 师资力量 -->
+    <section id="faculty" class="mb-10">
+      <h2 class="section-title text-xl brand-text">师资力量 Our Faculty</h2>
+      
+      <!-- 海外师资代表 -->
+      <h3 class="text-md font-semibold mb-3 flex items-center">
+        <span class="material-icons mr-2 text-yellow-500">public</span>
+        海外师资代表
+      </h3>
+      <div class="teacher-grid mb-4">
+        <div class="flex flex-col items-center" data-teacher="michael">
+          <img src="https://scholar.googleusercontent.com/citations?view_op=view_photo&user=yxUduqMAAAAJ&citpid=10" 
+               alt="Michael Jordan" 
+               class="teacher-avatar mb-1">
+          <p class="text-xs text-center">Michael Jordan</p>
+        </div>
+        <div class="flex flex-col items-center" data-teacher="stuart">
+          <img src="https://www.turing.ac.uk/sites/default/files/styles/people/public/2019-11/stuart_photo.jpg?itok=3wI2av3A" 
+               alt="Stuart Russell" 
+               class="teacher-avatar mb-1">
+          <p class="text-xs text-center">Stuart Russell</p>
+        </div>
+        <div class="flex flex-col items-center" data-teacher="tom1">
+          <img src="https://ecorner.stanford.edu/wp-content/uploads/sites/2/2017/10/byers_eCorner_335x335.jpg" 
+               alt="Tom Byers" 
+               class="teacher-avatar mb-1">
+          <p class="text-xs text-center">Tom Byers</p>
+        </div>
+      </div>
+      <div class="teacher-grid mb-4">
+        <div class="flex flex-col items-center" data-teacher="tom2">
+          <img src="https://ecorner.stanford.edu/wp-content/uploads/sites/2/2017/10/Kosnik-Tom_eCorner_Contributor_Cropped-335x335.jpeg" 
+               alt="Tom Kosnik" 
+               class="teacher-avatar mb-1">
+          <p class="text-xs text-center">Tom Kosnik</p>
+        </div>
+      </div>
+      
+      <!-- 国内师资代表 -->
+      <h3 class="text-md font-semibold mb-3 flex items-center">
+        <span class="material-icons mr-2 text-purple-600">location_on</span>
+        国内师资代表
+      </h3>
+      <div class="teacher-grid mb-2">
+        <div class="flex flex-col items-center" data-teacher="dingning">
+          <img src="https://airs.cuhk.edu.cn/sites/default/files/styles/w800/public/2023-04/%E4%B8%81%E5%AE%81-230413.jpg?itok=sIbgMOJB" 
+               alt="丁宁" 
+               class="teacher-avatar mb-1">
+          <p class="text-xs text-center">丁宁</p>
+        </div>
+        <div class="flex flex-col items-center" data-teacher="huangjianwei">
+          <img src="https://www.cuhk.edu.cn/sites/webmaster.prod1.dpsite04.cuhk.edu.cn/files/inline-images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20221103153611.jpg" 
+               alt="黄建伟" 
+               class="teacher-avatar mb-1">
+          <p class="text-xs text-center">黄建伟</p>
+        </div>
+        <div class="flex flex-col items-center" data-teacher="huangkai">
+          <img src="https://airs-academy.cuhk.edu.cn/sites/default/files/2024-01/huangkai0303.jpeg" 
+               alt="黄铠" 
+               class="teacher-avatar mb-1">
+          <p class="text-xs text-center">黄铠</p>
+        </div>
+      </div>
+      
+      <button id="showMoreTeachers" class="w-full py-2 text-xs text-center text-purple-700 rounded-lg mb-4">
+        显示更多师资
+        <span class="material-icons text-sm align-middle">expand_more</span>
+      </button>
+      
+      <!-- 更多国内师资 -->
+      <div id="moreTeachers" class="hidden">
+        <div class="teacher-grid mb-2">
+          <div class="flex flex-col items-center" data-teacher="hanlong">
+            <img src="https://airs.cuhk.edu.cn/sites/default/files/styles/w800/public/import_images/cuhk-content-type-researcher/han_long__0.jpg?itok=3fScELCa" 
+                 alt="韩龙" 
+                 class="teacher-avatar mb-1">
+            <p class="text-xs text-center">韩龙</p>
+          </div>
+          <div class="flex flex-col items-center" data-teacher="huangxianda">
+            <img src="https://img2.baidu.com/it/u=3237266444,3649084625&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=670" 
+                 alt="黄宪达" 
+                 class="teacher-avatar mb-1">
+            <p class="text-xs text-center">黄宪达</p>
+          </div>
+          <div class="flex flex-col items-center" data-teacher="lihaizhou">
+            <img src="https://img1.baidu.com/it/u=1851538335,1921096824&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=667" 
+                 alt="李海洲" 
+                 class="teacher-avatar mb-1">
+            <p class="text-xs text-center">李海洲</p>
+          </div>
+        </div>
+        <div class="teacher-grid mb-2">
+          <div class="flex flex-col items-center" data-teacher="liushaoshan">
+            <img src="https://airs.cuhk.edu.cn/sites/default/files/styles/w800/public/2024-05/%E5%88%98%E5%B0%91%E5%B1%B1.jpg?itok=oWL-tzXH" 
+                 alt="刘少山" 
+                 class="teacher-avatar mb-1">
+            <p class="text-xs text-center">刘少山</p>
+          </div>
+          <div class="flex flex-col items-center" data-teacher="wuxinyu">
+            <img src="https://people.ucas.ac.cn/self/img/c00f9ef2-b277-48a7-9495-cc16e31c9245.jpg" 
+                 alt="吴新宇" 
+                 class="teacher-avatar mb-1">
+            <p class="text-xs text-center">吴新宇</p>
+          </div>
+          <div class="flex flex-col items-center" data-teacher="wuzhizheng">
+            <img src="https://mscds.cuhk.edu.cn/sites/default/files/2024-02/20231225111901_57716.png" 
+                 alt="武执政" 
+                 class="teacher-avatar mb-1">
+            <p class="text-xs text-center">武执政</p>
+          </div>
+        </div>
+        <div class="teacher-grid mb-2">
+          <div class="flex flex-col items-center" data-teacher="yujiangfan">
+            <img src="https://airs.cuhk.edu.cn/sites/default/files/styles/w800/public/import_images/cuhk-content-type-researcher/yu_jiang_fan__0.jpg?itok=gm5Q3D9L" 
+                 alt="俞江帆" 
+                 class="teacher-avatar mb-1">
+            <p class="text-xs text-center">俞江帆</p>
+          </div>
+          <div class="flex flex-col items-center" data-teacher="zhangdapeng">
+            <img src="https://airs-academy.cuhk.edu.cn/sites/default/files/2024-01/zhang_da_peng_1.jpeg" 
+                 alt="张大鹏" 
+                 class="teacher-avatar mb-1">
+            <p class="text-xs text-center">张大鹏</p>
+          </div>
+          <div class="flex flex-col items-center" data-teacher="zhujian">
+            <img src="https://airs.cuhk.edu.cn/sites/default/files/styles/w800/public/2022-04/%E6%9C%B1%E5%BB%BA.jpg?itok=otoqcFG3" 
+                 alt="朱建" 
+                 class="teacher-avatar mb-1">
+            <p class="text-xs text-center">朱建</p>
+          </div>
+        </div>
+        <div class="teacher-grid mb-2">
+          <div class="flex flex-col items-center" data-teacher="zhangyuanting">
+            <img src="https://scholars.cityu.edu.hk/files/21423374/MBE_Zhang_Yuanting_photo.jpg" 
+                 alt="张元亭" 
+                 class="teacher-avatar mb-1">
+            <p class="text-xs text-center">张元亭</p>
+          </div>
+          <div class="flex flex-col items-center" data-teacher="chahongyuan">
+            <img src="https://airs-academy.cuhk.edu.cn/sites/default/files/2024-01/chahongyuan.jpeg" 
+                 alt="查宏远" 
+                 class="teacher-avatar mb-1">
+            <p class="text-xs text-center">查宏远</p>
+          </div>
+          <div class="flex flex-col items-center" data-teacher="zhengzibin">
+            <img src="https://sse.sysu.edu.cn/sites/default/files/inline-images/%E9%83%91%E8%80%81%E5%B8%88_1_0.png" 
+                 alt="郑子彬" 
+                 class="teacher-avatar mb-1">
+            <p class="text-xs text-center">郑子彬</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 招募对象 -->
+    <section id="prospects" class="mb-10">
+      <h2 class="section-title text-xl brand-text">招募对象 Prospects</h2>
+      <ul class="space-y-4 p-5 bg-white rounded-xl shadow-sm">
+        <li class="flex items-start">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-purple-100 mr-3 flex-shrink-0">
+            <span class="material-icons text-purple-600 text-sm">business</span>
+          </div>
+          <p class="text-sm">关注人工智能发展趋势的企业创始人、联合创始人、创业者</p>
+        </li>
+        <li class="flex items-start">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-purple-100 mr-3 flex-shrink-0">
+            <span class="material-icons text-purple-600 text-sm">trending_up</span>
+          </div>
+          <p class="text-sm">渴望了解前沿技术的优秀创业者、实现事业转型升级的企业管理者</p>
+        </li>
+        <li class="flex items-start">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-purple-100 mr-3 flex-shrink-0">
+            <span class="material-icons text-purple-600 text-sm">account_balance</span>
+          </div>
+          <p class="text-sm">关注突破性技术的投资人</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 课程安排 -->
+    <section id="arrangement" class="mb-10">
+      <h2 class="section-title text-xl brand-text">课程安排 Course Arrangement</h2>
+      
+      <div class="arrangement-grid">
+        <!-- 学习周期 -->
+        <div class="arrangement-card">
+          <div class="arrangement-header">
+            <span class="material-icons mr-1 text-sm">calendar_today</span>
+            学习周期
+          </div>
+          <div class="arrangement-content flex items-center justify-center py-1">
+            <div class="number-highlight">4</div>
+            <span class="text-sm ml-1">个月</span>
+          </div>
+        </div>
+        
+        <!-- 授课地点 -->
+        <div class="arrangement-card">
+          <div class="arrangement-header">
+            <span class="material-icons mr-1 text-sm">location_on</span>
+            授课地点
+          </div>
+          <div class="arrangement-content">
+            <div class="flex items-center">
+              <span class="material-icons text-purple-600 mr-1 text-xs">place</span>
+              <p class="text-xs">香港中文大学（深圳）</p>
+            </div>
+            <div class="flex items-center mt-1">
+              <span class="material-icons text-yellow-500 mr-1 text-xs">flight</span>
+              <p class="text-xs">美国硅谷</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 学习模式 -->
+      <div class="arrangement-card mt-3">
+        <div class="arrangement-header">
+          <span class="material-icons mr-1 text-sm">schedule</span>
+          学习模式
+        </div>
+        <div class="arrangement-content">
+          <div class="flex items-center">
+            <div class="w-2 h-2 rounded-full bg-purple-600 mr-2"></div>
+            <p class="text-xs">国内模块为期三个月，每月集中授课 <span class="font-bold text-purple-600">2</span> 天（周六、周日）</p>
+          </div>
+          <div class="flex items-center mt-2">
+            <div class="w-2 h-2 rounded-full bg-purple-600 mr-2"></div>
+            <p class="text-xs">海外模块研学一周</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 学费价格 -->
+      <div class="arrangement-card mt-3">
+        <div class="arrangement-header">
+          <span class="material-icons mr-1 text-sm">payments</span>
+          学费价格
+        </div>
+        <div class="arrangement-content">
+          <div class="flex items-center justify-between">
+            <div class="flex items-baseline">
+              <span class="number-highlight text-lg">12.8</span>
+              <span class="text-xs ml-1">万元/人</span>
+            </div>
+            <span class="badge bg-yellow-500">三人及以上团报优惠</span>
+          </div>
+          <p class="text-xs text-gray-500 mt-2">
+            费用包含：美国硅谷游学期间标准食宿及课程学费（不含往返机票及签证费用）、国内模块课程学费
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 底部信息 -->
+  <footer class="py-4 mt-6 bg-purple-900">
+    <div class="container mx-auto px-4">
+      <div class="text-center">
+        <p class="footer-text mb-1">
+          <span class="footer-icon"><span class="material-icons">school</span></span>
+          深圳市人工智能与机器人研究院AIRS学院
+        </p>
+        <p class="footer-text mb-1">
+          <span class="footer-icon"><span class="material-icons">place</span></span>
+          深圳市龙岗区坂田街道雅宝路1号星河WORLD G2栋13-15层
+        </p>
+        <p class="footer-text mb-1">
+          <span class="footer-icon"><span class="material-icons">phone</span></span>
+          联系 0755-2351 8069
+        </p>
+        <p class="footer-text mb-1">
+          <span class="footer-icon"><span class="material-icons">email</span></span>
+          邮箱 scientific-airs@cuhk.edu.cn
+        </p>
+        <p class="footer-text">
+          <span class="footer-icon"><span class="material-icons">public</span></span>
+          网址 http://airs-academy.cuhk.edu.cn/
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 咨询按钮 -->
+  <a href="https://airs-academy.mike-x.com/Oj2g4" target="_blank" class="consult-btn">
+    <div class="liquid-btn">
+      <span class="material-icons text-2xl text-white relative z-10">chat</span>
+    </div>
+  </a>
+
+  <!-- 教师信息模态框 -->
+  <div class="teacher-modal" id="teacherModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="flex items-center">
+          <img id="modalAvatar" src="" alt="Teacher" class="w-16 h-16 rounded-full object-cover border-2 border-white mr-3">
+          <div>
+            <h3 id="modalName" class="text-lg font-bold"></h3>
+            <p id="modalTitle" class="teacher-title"></p>
+          </div>
+        </div>
+        <span class="close-modal material-icons">close</span>
+      </div>
+      <div class="modal-body">
+        <ul id="modalInfo" class="teacher-info-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 教师数据
+    const teachersData = {
+      michael: {
+        name: "Michael Jordan 教授",
+        avatar: "https://scholar.googleusercontent.com/citations?view_op=view_photo&user=yxUduqMAAAAJ&citpid=10",
+        title: "加州大学伯克利分校教授",
+        info: `
+          <li>加州大学伯克利分校电子工程与计算机科学系教授</li>
+          <li>美国国家科学院院士、美国国家工程院院士</li>
+          <li>美国艺术与科学院院士、英国皇家学会外籍院士</li>
+          <li>曾被《Science》杂志评选为 "全球最具影响力的计算机学家"</li>
+          <li>研究领域：机器学习、统计学、认知科学、生物学和经济学</li>
+        `
+      },
+      stuart: {
+        name: "Stuart Russell 教授",
+        avatar: "https://www.turing.ac.uk/sites/default/files/styles/people/public/2019-11/stuart_photo.jpg?itok=3wI2av3A",
+        title: "人工智能领域领军人物",
+        info: `
+          <li>人工智能领域领军人物之一</li>
+          <li>加州大学伯克利分校人类兼容人工智能中心创始人、电子工程与计算机科学系教授</li>
+          <li>美国国家人工智能科学院院士</li>
+          <li>ACM会士、AAAS会士</li>
+          <li>世界经济论坛人工智能与机器人理事会副主席</li>
+          <li>研究领域：人工智能基础理论、机器学习算法、AI安全与伦理、多智能体系统</li>
+        `
+      },
+      tom1: {
+        name: "Tom Byers 教授",
+        avatar: "https://ecorner.stanford.edu/wp-content/uploads/sites/2/2017/10/byers_eCorner_335x335.jpg",
+        title: "斯坦福大学工程学院教授",
+        info: `
+          <li>斯坦福大学工程学院首位创业教授</li>
+          <li>斯坦福科技风险投资项目(STVP)教学主任</li>
+          <li>美国国家工程院戈登奖</li>
+          <li>斯坦福大学优选荣誉戈尔奖</li>
+          <li>畅销书《科技风投：从概念到公司成型》作者</li>
+          <li>研究领域：高增长创业教育、技术创新教育</li>
+        `
+      },
+      tom2: {
+        name: "Tom Kosnik 教授",
+        avatar: "https://ecorner.stanford.edu/wp-content/uploads/sites/2/2017/10/Kosnik-Tom_eCorner_Contributor_Cropped-335x335.jpeg",
+        title: "斯坦福大学工程学院教授",
+        info: `
+          <li>斯坦福大学工程学院教授</li>
+          <li>FoundersX Ventures合伙人</li>
+          <li>讲授全球创业营销(GEM)、技术创业、创业领导力(ETL)等课程</li>
+          <li>多次被评为斯坦福最受欢迎教师之一</li>
+          <li>研究领域：全球创业营销、品牌管理、技术创业</li>
+        `
+      },
+      // 国内师资
+      dingning: {
+        name: "丁宁 博士",
+        avatar: "https://airs.cuhk.edu.cn/sites/default/files/styles/w800/public/2023-04/%E4%B8%81%E5%AE%81-230413.jpg?itok=sIbgMOJB",
+        title: "AIRS常务副院长",
+        info: `
+          <li>AIRS常务副院长兼特种机器人中心主任</li>
+          <li>广东省人工智能与机器人学会理事</li>
+          <li>TC591/SC1全国机器人标准化技术委员会</li>
+          <li>特种设备用机器人分技术委员会委员</li>
+          <li>研究领域：仿生型特种机器人、计算机视觉</li>
+        `
+      },
+      huangjianwei: {
+        name: "黄建伟 教授",
+        avatar: "https://www.cuhk.edu.cn/sites/webmaster.prod1.dpsite04.cuhk.edu.cn/files/inline-images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20221103153611.jpg",
+        title: "AIRS副院长",
+        info: `
+          <li>AIRS副院长兼群体智能中心主任</li>
+          <li>港中大（深圳）协理副校长</li>
+          <li>IEEE Fellow</li>
+          <li>深圳市鹏城特聘教授、深圳市国家级人才</li>
+          <li>研究领域：群体智能、联邦学习、通信网络、网络优化、网络经济学</li>
+        `
+      },
+      huangkai: {
+        name: "黄铠 教授",
+        avatar: "https://airs-academy.cuhk.edu.cn/sites/default/files/2024-01/huangkai0303.jpeg",
+        title: "AIRS高性能计算与控制中心主任",
+        info: `
+          <li>AIRS高性能计算与控制中心主任</li>
+          <li>IEEE Life Fellow</li>
+          <li>港中大（深圳）校长讲座教授</li>
+          <li>曾任美国普渡大学、南加州大学正教授</li>
+          <li>研究领域：云计算、物联网、人工智能</li>
+        `
+      },
+      hanlong: {
+        name: "韩龙 博士",
+        avatar: "https://airs.cuhk.edu.cn/sites/default/files/styles/w800/public/import_images/cuhk-content-type-researcher/han_long__0.jpg?itok=3fScELCa",
+        title: "AIRS副院长",
+        info: `
+          <li>AIRS副院长兼医疗机器人中心主任</li>
+          <li>深圳市机器人协会医疗机器人专家委员会专家</li>
+          <li>招商局-AIRS医疗机器人未来产业联合实验室主任</li>
+          <li>研究领域：SLAM自主移动、智能服务机器人、外科手术机器人</li>
+        `
+      },
+      // 更多国内师资
+      huangxianda: {
+        name: "黄宪达 教授",
+        avatar: "https://img2.baidu.com/it/u=3237266444,3649084625&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=670",
+        title: "港中大（深圳）校长讲座教授",
+        info: `
+          <li>港中大（深圳）校长讲座教授</li>
+          <li>港中大（深圳）医学院副院长</li>
+          <li>瓦谢尔计算生物研究院执行院长</li>
+          <li>广东省普通高校数字生物与药物开发重点实验室平台负责人</li>
+          <li>研究领域：生物信息、基因体学、智能生医科技（药物设计、基因检测、精准医疗）、生物数据库</li>
+        `
+      },
+      // 后续省略其他老师数据，格式类似
+      lihaizhou: {
+        name: "李海洲 院士",
+        avatar: "https://img1.baidu.com/it/u=1851538335,1921096824&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=667",
+        title: "新加坡工程院士",
+        info: `
+          <li>新加坡工程院士</li>
+          <li>IEEE Fellow、ISCA Fellow</li>
+          <li>港中大（深圳）数据科学学院执行院长</li>
+          <li>德国不来梅大学卓越讲座教授</li>
+          <li>曾任新加坡国立大学终身教授</li>
+          <li>研究领域：语音信息处理、自然语言处理、类脑计算、人机交互</li>
+        `
+      },
+      liushaoshan: {
+        name: "刘少山 博士",
+        avatar: "https://airs.cuhk.edu.cn/sites/default/files/styles/w800/public/2024-05/%E5%88%98%E5%B0%91%E5%B1%B1.jpg?itok=oWL-tzXH",
+        title: "AIRS具身智能中心主任",
+        info: `
+          <li>AIRS具身智能中心主任</li>
+          <li>ACM技术政策委员会成员</li>
+          <li>IEEE国际设备和系统路线图(IRDS)机器人计算方向主席</li>
+          <li>IEEE科技创业会中国区主席</li>
+          <li>研究领域：具身智能、机器人计算系统以及自动驾驶</li>
+        `
+      },
+      wuxinyu: {
+        name: "吴新宇 教授",
+        avatar: "https://people.ucas.ac.cn/self/img/c00f9ef2-b277-48a7-9495-cc16e31c9245.jpg",
+        title: "中国科学院深圳先进技术研究院集成技术研究所副所长",
+        info: `
+          <li>中国科学院深圳先进技术研究院集成技术研究所副所长</li>
+          <li>广东省机器人与智能系统重点实验室主任</li>
+          <li>国家杰出青年科学基金获得者</li>
+          <li>万人计划科技创新领军人才</li>
+          <li>深圳市鹏城学者特聘教授</li>
+          <li>研究领域：智能机器人，外骨骼机器人，穿戴式机器人，微型机器人，仿生机器人，服务机器人与智能系统，特种机器人，人机协作技术</li>
+        `
+      },
+      wuzhizheng: {
+        name: "武执政 教授",
+        avatar: "https://mscds.cuhk.edu.cn/sites/default/files/2024-02/20231225111901_57716.png",
+        title: "港中大（深圳）理工学院副教授",
+        info: `
+          <li>港中大（深圳）理工学院副教授</li>
+          <li>港中大（深圳）-趣丸科技联合实验室主任</li>
+          <li>IEEE语音与语言处理技术委员会委员</li>
+          <li>研究领域：语音交互、语音生成、音频鉴伪</li>
+        `
+      },
+      yujiangfan: {
+        name: "俞江帆 教授",
+        avatar: "https://airs.cuhk.edu.cn/sites/default/files/styles/w800/public/import_images/cuhk-content-type-researcher/yu_jiang_fan__0.jpg?itok=gm5Q3D9L",
+        title: "港中大（深圳）理工学院助理教授",
+        info: `
+          <li>港中大（深圳）理工学院助理教授</li>
+          <li>AIRS微纳机器人研究中心主任</li>
+          <li>第十一届吴文俊人工智能自然科学奖</li>
+          <li>福布斯中国30 Under30榜</li>
+          <li>研究领域：微纳米机器人、医疗机器人、生物医学</li>
+        `
+      },
+      zhangdapeng: {
+        name: "张大鹏 院士",
+        avatar: "https://airs-academy.cuhk.edu.cn/sites/default/files/2024-01/zhang_da_peng_1.jpeg",
+        title: "加拿大皇家科学院及加拿大工程院双院士",
+        info: `
+          <li>加拿大皇家科学院及加拿大工程院双院士</li>
+          <li>AIRS计算机视觉中心主任</li>
+          <li>IEEE Life Fellow</li>
+          <li>国际模式识别协会会士&亚太人工智能学会会士</li>
+          <li>港中大（深圳）校长学勤讲座教授</li>
+          <li>研究领域：模式识别、图像处理、生物特征识别</li>
+        `
+      },
+      zhujian: {
+        name: "朱建 教授",
+        avatar: "https://airs.cuhk.edu.cn/sites/default/files/styles/w800/public/2022-04/%E6%9C%B1%E5%BB%BA.jpg?itok=otoqcFG3",
+        title: "港中大（深圳）理工学院副教授",
+        info: `
+          <li>港中大（深圳）理工学院副教授</li>
+          <li>AIRS软体机器人研究中心主任</li>
+          <li>IEEE Robotics and Automation Letters副主编</li>
+          <li>研究领域：软体智能机器人、仿生机器人、智能材料和结构</li>
+        `
+      },
+      zhangyuanting: {
+        name: "张元亭 院士",
+        avatar: "https://scholars.cityu.edu.hk/files/21423374/MBE_Zhang_Yuanting_photo.jpg",
+        title: "国际医学与生物工程学院院士",
+        info: `
+          <li>国际医学与生物工程学院院士</li>
+          <li>香港中文大学电子工程系研究教授</li>
+          <li>国家重点基础研究计划(973)首席科学家</li>
+          <li>中国科学院深圳先进技术研究院生物医学与健康工程研究所所长</li>
+          <li>研究领域：医学与生物工程</li>
+        `
+      },
+      chahongyuan: {
+        name: "查宏远 教授",
+        avatar: "https://airs-academy.cuhk.edu.cn/sites/default/files/2024-01/chahongyuan.jpeg",
+        title: "港中大（深圳）数据科学学院副院长",
+        info: `
+          <li>港中大（深圳）数据科学学院副院长</li>
+          <li>AIRS机器学习与应用中心主任</li>
+          <li>曾任美国宾州州立大学、佐治亚理工学院计算机学院正教授</li>
+          <li>研究领域：机器学习及应用</li>
+        `
+      },
+      zhengzibin: {
+        name: "郑子彬 教授",
+        avatar: "https://sse.sysu.edu.cn/sites/default/files/inline-images/%E9%83%91%E8%80%81%E5%B8%88_1_0.png",
+        title: "中山大学软件工程学院院长",
+        info: `
+          <li>中山大学软件工程学院院长</li>
+          <li>IEEE Fellow、IET Fellow</li>
+          <li>ACM杰出科学家</li>
+          <li>国家数字家庭工程技术研究中心副主任</li>
+          <li>广东省区块链工程技术研究中心主任</li>
+          <li>研究领域：软件可靠性，程序分析，区块链，智能合约，可信软件</li>
+        `
+      }
+    };
+
+    // DOM元素获取
+    const openSidebar = document.getElementById('openSidebar');
+    const closeSidebar = document.getElementById('closeSidebar');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const showMoreTeachers = document.getElementById('showMoreTeachers');
+    const moreTeachers = document.getElementById('moreTeachers');
+    const teacherModal = document.getElementById('teacherModal');
+    const teacherElements = document.querySelectorAll('[data-teacher]');
+    const modalClose = document.querySelector('.close-modal');
+    const shenzhenPoint = document.getElementById('shenzhenPoint');
+    const californiaPoint = document.getElementById('californiaPoint');
+    const shenzhenTooltip = document.getElementById('shenzhenTooltip');
+    const californiaTooltip = document.getElementById('californiaTooltip');
+    
+    // 初始化轮播图
+    const carouselInner = document.getElementById('carouselInner');
+    const carouselItems = carouselInner.querySelectorAll('.carousel-item');
+    const carouselIndicators = document.getElementById('carouselIndicators');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    let currentIndex = 0;
+    let intervalId;
+    
+    // 创建轮播指示器
+    carouselItems.forEach((_, index) => {
+      const indicator = document.createElement('div');
+      indicator.classList.add('indicator');
+      if (index === 0) indicator.classList.add('active');
+      indicator.addEventListener('click', () => {
+        goToSlide(index);
+      });
+      carouselIndicators.appendChild(indicator);
+    });
+    
+    // 更新轮播图
+    function updateCarousel() {
+      carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
+      const indicators = carouselIndicators.querySelectorAll('.indicator');
+      indicators.forEach((indicator, index) => {
+        if (index === currentIndex) {
+          indicator.classList.add('active');
+        } else {
+          indicator.classList.remove('active');
+        }
+      });
+    }
+    
+    // 跳转到指定幻灯片
+    function goToSlide(index) {
+      currentIndex = index;
+      updateCarousel();
+      resetCarouselInterval();
+    }
+    
+    // 下一张幻灯片
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % carouselItems.length;
+      updateCarousel();
+      resetCarouselInterval();
+    }
+    
+    // 上一张幻灯片
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
+      updateCarousel();
+      resetCarouselInterval();
+    }
+    
+    // 重置轮播定时器
+    function resetCarouselInterval() {
+      clearInterval(intervalId);
+      intervalId = setInterval(nextSlide, 3000);
+    }
+    
+    // 初始化轮播定时器
+    resetCarouselInterval();
+    
+    // 轮播控制按钮
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+    
+    // 地图点击事件 - 显示中心弹窗
+    shenzhenPoint.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (shenzhenTooltip.classList.contains('active')) {
+        shenzhenTooltip.classList.remove('active');
+      } else {
+        shenzhenTooltip.classList.add('active');
+        californiaTooltip.classList.remove('active');
+      }
+    });
+    
+    californiaPoint.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (californiaTooltip.classList.contains('active')) {
+        californiaTooltip.classList.remove('active');
+      } else {
+        californiaTooltip.classList.add('active');
+        shenzhenTooltip.classList.remove('active');
+      }
+    });
+    
+    // 在任何地方点击时隐藏提示框
+    document.addEventListener('click', () => {
+      shenzhenTooltip.classList.remove('active');
+      californiaTooltip.classList.remove('active');
+    });
+    
+    // 显示更多师资
+    showMoreTeachers.addEventListener('click', () => {
+      moreTeachers.classList.toggle('hidden');
+      if (moreTeachers.classList.contains('hidden')) {
+        showMoreTeachers.innerHTML = '显示更多师资 <span class="material-icons text-sm align-middle">expand_more</span>';
+      } else {
+        showMoreTeachers.innerHTML = '收起 <span class="material-icons text-sm align-middle">expand_less</span>';
+      }
+    });
+    
+    // 显示教师模态框
+    teacherElements.forEach(element => {
+      element.addEventListener('click', () => {
+        const teacherId = element.getAttribute('data-teacher');
+        const teacher = teachersData[teacherId];
+        
+        if (teacher) {
+          document.getElementById('modalAvatar').src = teacher.avatar;
+          document.getElementById('modalName').textContent = teacher.name;
+          document.getElementById('modalTitle').textContent = teacher.title;
+          document.getElementById('modalInfo').innerHTML = teacher.info;
+          teacherModal.classList.add('active');
+        }
+      });
+    });
+    
+    // 关闭教师模态框
+    modalClose.addEventListener('click', () => {
+      teacherModal.classList.remove('active');
+    });
+    
+    // 点击模态框外部关闭
+    teacherModal.addEventListener('click', (e) => {
+      if (e.target === teacherModal) {
+        teacherModal.classList.remove('active');
+      }
+    });
+    
+    // 侧边栏开关
+    openSidebar.addEventListener('click', () => {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+    });
+    
+    closeSidebar.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+    });
+    
+    sidebarOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+    });
+    
+    // 导航链接点击关闭侧边栏
+    document.querySelectorAll('.sidebar a').forEach(link => {
+      link.addEventListener('click', () => {
+        sidebar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
